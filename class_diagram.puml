@@ -1,0 +1,84 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface ILogger {
++ {abstract} LogInfo(message : string) : void
++ {abstract} LogError(message : string) : void
+}
+
+ILogger <|.. LogToFile
+class LogToFile {
+- path : string
+
++ LogToFile(path : string)
+
+- WriteToFile(message : string) : void
+
++ LogInfo(message : string) : void
++ LogError(message : string) : void
+}
+
+ILogger <|.. LogToConsole
+class LogToConsole {
+- WriteToConsole(message : string) : void
+
++ LogInfo(message : string) : void
++ LogError(message : string) : void
+}
+
+enum BankAccountType {
+Rub,
+Dollar,
+Euro
+}
+
+BankAccountType <--o IBankAccount
+interface IBankAccount {
++ {abstract} Deposit(money : double) : void
++ {abstract} Withdrawal(money : double) : bool
++ {abstract} GetBalance() : double
++ {abstract} GetType() : BankAccountType
++ {abstract} GetNumber() : string
++ {abstract} GetOwner() : string
+}
+
+IBankAccount <|.. BankAccount
+BankAccountType <--* BankAccount
+class BankAccount {
+- number : string
+- balance : double
+- type : BankAccountType
+- owner : string
+
++ BankAccount(owner : string, type : BankAccountType, balance : double = 0)
+
++ Deposit(money : double) : void
++ Withdrawal(money : double) : bool
++ GetBalance() : double
++ GetType() : BankAccountType
++ GetNumber() : string
++ GetOwner() : string
+}
+
+IBankAccount <|.. ProxyBankAccount
+BankAccount <--o ProxyBankAccount
+ILogger <--o ProxyBankAccount
+class ProxyBankAccount {
+- account : BankAccount
+- loggers : ILogger[]
+
++ ProxyBankAccount(account : IBankAccount)
++ ProxyBankAccount(account : IBankAccount, loggers : ILogger[])
+
++ Deposit(money : double) : void
++ Withdrawal(money : double) : bool
++ GetBalance() : double
++ GetType() : BankAccountType
++ GetNumber() : string
++ GetOwner() : string
+
++ AddLogger(name : string, logger : ILogger) : void
++ DelLogger(name : string, logger : ILogger) : void
+}
+
+@enduml

@@ -1,0 +1,10 @@
+#ifndef PROXYDEMO_BANKACCOUNTTYPE_H
+#define PROXYDEMO_BANKACCOUNTTYPE_H
+
+
+enum BankAccountType {
+    Rub, Dollar, Euro
+};
+
+
+#endif //PROXYDEMO_BANKACCOUNTTYPE_H
