@@ -14,7 +14,7 @@ int main() {
 
     IBankAccount* account = new ProxyBankAccount(new BankAccount("A", BankAccountType::Rub));
     dynamic_cast<ProxyBankAccount*>(account)->AddLogger("console", logToConsole);
-    dynamic_cast<ProxyBankAccount*>(account)->AddLogger("console", logToFile);
+    dynamic_cast<ProxyBankAccount*>(account)->AddLogger("file", logToFile);
 
     cout << account->GetBalance() << endl;
     account->Deposit(-8);

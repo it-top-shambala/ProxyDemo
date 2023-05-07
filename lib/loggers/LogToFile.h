@@ -9,15 +9,18 @@ using namespace std;
 
 class LogToFile : public ILogger {
 private:
-    ofstream _file;
+    string _path;
 
     void WriteToFile(string message) {
-        _file << message << endl;
+        ofstream file;
+        file.open(_path, ios::app);
+        file << message << endl;
+        file.close();
     }
 
 public:
     LogToFile(string path) {
-        _file.open(path, ios::app);
+        _path = path;
     }
 
     void LogInfo(string message) override {
